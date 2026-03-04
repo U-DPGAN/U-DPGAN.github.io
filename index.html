@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speech Enhancement Audio Demo</title>
+  <style>
+    :root { --gap: 14px; --radius: 14px; }
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 16px;
+      color: #111;
+      line-height: 1.5;
+    }
+    h1{ font-size: 20px; margin: 0 0 10px; }
+    .hint{ color:#555; font-size: 13px; margin: 0 0 18px; }
+    code{ background: #f6f6f6; padding: 2px 6px; border-radius: 6px; }
+    .card{
+      border: 1px solid #e6e6e6;
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+      background: #fff;
+    }
+    .grid{
+      display: grid;
+      grid-template-columns: 140px 1fr 1fr 1fr 1fr;
+      gap: var(--gap);
+      align-items: center;
+    }
+    .hdr{
+      font-weight: 700;
+      font-size: 13px;
+      color: #444;
+      user-select: none;
+    }
+    .label{
+      font-weight: 700;
+      font-size: 13px;
+      color: #222;
+      user-select: none;
+    }
+    audio{ width: 100%; }
+    .divider{
+      height: 1px;
+      background: #efefef;
+      margin: 14px 0;
+    }
+    .footer{
+      margin-top: 14px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* Mobile */
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+      .hdrRow{ display:none; }
+      .label{ margin-top: 6px; }
+      .cell{ margin-bottom: 10px; }
+      .cell .mobileHdr{ display:block !important; margin: 6px 0 6px; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Speech Enhancement Audio Demo</h1>
+  <p class="hint">
+    Put your audio files under <code>audio/</code> (at the repository root) and keep the file names below,
+    or edit the paths to match your filenames.
+    For faster loading on GitHub Pages, consider <code>.mp3</code> (set type to <code>audio/mpeg</code>).
+  </p>
+
+  <div class="card">
+    <!-- Header (desktop only) -->
+    <div class="grid hdrRow" style="margin-bottom: 6px;">
+      <div></div>
+      <div class="hdr">Noisy</div>
+      <div class="hdr">MetricGAN-U</div>
+      <div class="hdr">MOS-GAN</div>
+      <div class="hdr">U-DPGAN</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- One sample: 4 audios -->
+    <div class="grid">
+      <div class="label">Sample 01</div>
+
+      <div class="cell">
+        <div class="hdr mobileHdr" style="display:none;">Noisy</div>
+        <audio controls preload="none">
+          <source src="audio/noisy.wav" type="audio/wav" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <div class="cell">
+        <div class="hdr mobileHdr" style="display:none;">MetricGAN-U</div>
+        <audio controls preload="none">
+          <source src="audio/metricgan_u.wav" type="audio/wav" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <div class="cell">
+        <div class="hdr mobileHdr" style="display:none;">MOS-GAN</div>
+        <audio controls preload="none">
+          <source src="audio/mos_gan.wav" type="audio/wav" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <div class="cell">
+        <div class="hdr mobileHdr" style="display:none;">U-DPGAN</div>
+        <audio controls preload="none">
+          <source src="audio/u_dpgan.wav" type="audio/wav" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <div class="footer">
+      Convenience: when one audio starts playing, all other players are paused.
+    </div>
+  </div>
+
+  <script>
+    // Play one -> pause others
+    const audios = Array.from(document.querySelectorAll("audio"));
+    audios.forEach(a => {
+      a.addEventListener("play", () => {
+        audios.forEach(b => { if (b !== a) b.pause(); });
+      });
+    });
+  </script>
+</body>
+</html>
